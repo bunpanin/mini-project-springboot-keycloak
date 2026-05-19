@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.taskmanager.service.TaskServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-05-19T08:41:47" hostname="Buns-MacBook-Pro.local" time="0.452">
+  <properties/>
+  <testcase name="createTask_shouldReturnSavedTaskDTO()" classname="com.example.taskmanager.service.TaskServiceTest" time="0.447"/>
+  <testcase name="createTask_withNullStatus_shouldUseDefaultTodo()" classname="com.example.taskmanager.service.TaskServiceTest" time="0.002"/>
+  <testcase name="getTaskById_shouldReturnTaskDTO()" classname="com.example.taskmanager.service.TaskServiceTest" time="0.002"/>
+  <system-out><![CDATA[15:41:47.712 [Test worker] INFO com.example.taskmanager.service.TaskService -- Creating new task: Test Task
+15:41:47.721 [Test worker] INFO com.example.taskmanager.service.TaskService -- Creating new task: Test Task
+15:41:47.723 [Test worker] INFO com.example.taskmanager.service.TaskService -- Fetching task by id: 1
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/bunpanin/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.13/979ce25f7d3096a2e82214ba7dc972a05ce7a171/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

@@ -28,4 +28,6 @@ public class UserRegistrationDTO {
 
     private String firstName;
     private String lastName;
+
+    private String role; // "USER" or "ADMIN", defaults to "USER"
 }

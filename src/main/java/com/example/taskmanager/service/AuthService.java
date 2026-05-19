@@ -4,6 +4,8 @@ import com.example.taskmanager.dto.LoginRequest;
 import com.example.taskmanager.dto.RefreshTokenRequest;
 import com.example.taskmanager.dto.TokenResponse;
 import com.example.taskmanager.dto.UserRegistrationDTO;
+import com.example.taskmanager.entity.User;
+import com.example.taskmanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -31,6 +33,7 @@ public class AuthService {
     @Value("${keycloak.client-id:task-manager-client}")
     private String clientId;
 
+    private final UserRepository userRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
     public void register(UserRegistrationDTO registrationDTO) {
@@ -59,6 +62,22 @@ public class AuthService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(user, headers);
         try {
             restTemplate.postForEntity(usersUrl, request, Void.class);
+            
+            // Save to PostgreSQL after successful Keycloak registration
+            String role = registrationDTO.getRole();
+            if (role == null || role.isEmpty()) {
+                role = "USER";
+            }
+            
+            User dbUser = User.builder()
+                    .username(registrationDTO.getUsername())
+                    .email(registrationDTO.getEmail())
+                    .firstName(registrationDTO.getFirstName())
+                    .lastName(registrationDTO.getLastName())
+                    .role(role.toUpperCase())
+                    .build();
+            userRepository.save(dbUser);
+            
         } catch (HttpStatusCodeException e) {
             String errorBody = e.getResponseBodyAsString();
             throw new RuntimeException("Failed to register user in Keycloak. " +
@@ -130,5 +149,20 @@ public class AuthService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
         return restTemplate.postForObject(url, request, TokenResponse.class);
+    }
+
+    public void logout(RefreshTokenRequest logoutRequest) {
+        String url = issuerUri + "/protocol/openid-connect/logout";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("client_id", clientId);
+        map.add("refresh_token", logoutRequest.getRefreshToken());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+        restTemplate.postForObject(url, request, String.class);
     }
 }

@@ -6,7 +6,9 @@
   "rememberMe": true,
   "verifyEmail": false,
   "loginWithEmailAllowed": true,
-  "accessTokenLifespan": 18000,
+  "accessTokenLifespan": 1800,
+  "clientSessionIdleTimeout": 1800,
+  "clientSessionMaxLifespan": 1800,
   "defaultRoles": ["USER"],
   "roles": {
     "realm": [
