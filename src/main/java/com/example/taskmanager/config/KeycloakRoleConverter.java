@@ -1,4 +1,4 @@
-package com.example.taskmanager.config;
+ package com.example.taskmanager.config;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;

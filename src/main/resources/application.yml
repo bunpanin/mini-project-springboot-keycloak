@@ -27,6 +27,18 @@ spring:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/task-manager-realm}
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8080/realms/task-manager-realm/protocol/openid-connect/certs}
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bunpanin017@gmail.com
+    password: xdnl kzsz txpi gxnd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 keycloak:
   client-id: ${KEYCLOAK_CLIENT_ID:task-manager-client}
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}

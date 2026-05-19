@@ -35,6 +35,7 @@ Complete full-stack mini project using Spring Boot and Keycloak for authenticati
 
 3. **Wait for services to start**:
    - Keycloak: `http://localhost:8080` (Realm and users are automatically imported)
+   - Mailpit (Email UI): `http://localhost:8025`
    - PostgreSQL: `localhost:5432`
    - Spring Boot App: `http://localhost:8081`
 

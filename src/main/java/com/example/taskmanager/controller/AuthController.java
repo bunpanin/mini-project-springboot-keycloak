@@ -1,9 +1,6 @@
 package com.example.taskmanager.controller;
 
-import com.example.taskmanager.dto.LoginRequest;
-import com.example.taskmanager.dto.RefreshTokenRequest;
-import com.example.taskmanager.dto.TokenResponse;
-import com.example.taskmanager.dto.UserRegistrationDTO;
+import com.example.taskmanager.dto.*;
 import com.example.taskmanager.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,10 +21,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    @Operation(summary = "Register a new user")
+    @Operation(summary = "Register user and send OTP to email")
     public ResponseEntity<String> register(@Valid @RequestBody UserRegistrationDTO registrationDTO) {
         authService.register(registrationDTO);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Registration initiated. Please check your email for the OTP.", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register/verify")
+    @Operation(summary = "Verify OTP and complete registration")
+    public ResponseEntity<String> verify(@Valid @RequestBody OtpVerificationRequest verificationRequest) {
+        authService.verifyOtp(verificationRequest);
+        return ResponseEntity.ok("User registered and verified successfully.");
     }
 
     @PostMapping("/login")
